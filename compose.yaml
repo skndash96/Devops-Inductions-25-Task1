@@ -1,0 +1,39 @@
+services:
+  frontend:
+    container_name: app-frontend
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    depends_on:
+      - backend
+
+  backend:
+    container_name: app-backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - 4001:8080
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL
+
+  db:
+    container_name: app-db
+    image: postgres:16-alpine
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD
+
+volumes:
+  db:
+  web:

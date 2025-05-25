@@ -1,7 +1,7 @@
 {
   "name": "authentication-app",
   "version": "0.1.0",
-  "proxy": "http://localhost:8080",
+  "proxy": "http://backend:8080",
   "dependencies": {
     "axios": "^0.21.0",
     "formik": "^2.2.5",
